@@ -1,6 +1,5 @@
 import { BigNumberish } from "ethers";
-import { NetConnectOpts } from "net";
-import { type } from "os";
+import { TNetwork } from "eth-hooks/models/networkTypes"
 
 // MY INFURA_ID, SWAP IN YOURS FROM https://infura.io/dashboard/ethereum
 export const INFURA_ID = "460f40a260564ac4a4f4b3fffb032dad";
@@ -14,7 +13,7 @@ export const BLOCKNATIVE_DAPPID = "0b58206a-f3c0-4701-a62f-73c7243e8c77";
 export const ALCHEMY_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
 export interface NetworkConfig {
-  [networkName: string]: LocalNetWorkConfig
+  [networkName: string]: TNetwork
 }
 
 export interface LocalNetWorkConfig {

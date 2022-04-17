@@ -38,7 +38,6 @@ const config: HardhatUserConfig = {
     }
   },
   defaultNetwork: "localhost",
-
   networks: {
     localhost:{
       url: "http://127.0.0.1:8545",
@@ -62,7 +61,7 @@ const config: HardhatUserConfig = {
     },
     account1: {
       default: 1,
-    }
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,

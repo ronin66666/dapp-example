@@ -8,6 +8,15 @@ import { BrowserRouter } from "react-router-dom";
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+declare global {
+  // tslint:disable-next-line
+  interface Window {
+    web3: any;
+    [name: string]: any;
+  }
+}
+
 root.render(
   <BrowserRouter>
     <App />
