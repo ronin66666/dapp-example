@@ -1,0 +1,1075 @@
+syntax = "proto3";
+package msg;
+option go_package = "../msg";
+
+/*
+10代表登录模块
+00代表请求类型
+01代表具体协议
+ */
+enum MsgId {
+  MSGID_BEGIN = 0;
+  MESSAGE_CODE = 1;
+
+  GM_MSG_C                    = 9901; //gm请求
+
+  LOGIN_C                     = 1001; //登录请求
+  LOGIN_S                     = 1002; //登录返回
+
+  PLAYER_DATA_C               = 1101; //玩家信息请求
+  PLAYER_DATA_S               = 1102; //玩家信息返回
+  UPDATE_PLAYER_NAME_C        = 1111; //更新玩家名称请求
+  UPDATE_PLAYER_NAME_S        = 1112; //更新玩家名称返回
+  UPDATE_PLAYER_TITLE_C       = 1121; //更新玩家称号请求
+  UPDATE_PLAYER_TITLE_S       = 1122; //更新玩家称号返回
+  UPDATE_PLAYER_IMAGE_C       = 1131; //更新玩家头像请求
+  UPDATE_PLAYER_IMAGE_S       = 1132; //更新玩家头像返回
+  UPDATE_PLAYER_IMAGE_FRAME_C = 1141; //更新玩家头像框请求
+  UPDATE_PLAYER_IMAGE_FRAME_S = 1142; //更新玩家头像框返回
+
+  HERO_LIST_C                 = 1201; //英雄列表请求
+  HERO_LIST_S                 = 1202; //英雄列表返回
+  HERO_INFO_C                 = 1211; //英雄信息请求
+  HERO_INFO_S                 = 1212; //英雄信息返回
+  UPDATE_HERO_LEVEL_C         = 1221; //更新英雄升级请求
+  UPDATE_HERO_LEVEL_S         = 1222; //更新英雄升级请求
+  UPDATE_HERO_SKINID_C        = 1231; //更新英雄皮肤请求
+  UPDATE_HERO_SKINID_S        = 1232; //更新英雄皮肤请求
+
+  SHOP_LIST_C                 = 1301; //商城列表请求
+  SHOP_LIST_S                 = 1302; //商城列表返回
+  SHOP_RESET_C                = 1311; //商城列表刷新请求
+  SHOP_RESET_S                = 1312; //商城列表刷新返回
+  SHOP_BUY_C                  = 1321; //商城购买请求
+  SHOP_BUY_S                  = 1322; //商城购买返回
+
+  LINEUP_LIST_C               = 1401; //阵容列表请求
+  LINEUP_LIST_S               = 1402; //阵容列表返回
+  UPDATE_LINEUP_LIST_C        = 1411; //更新阵容列表请求
+  UPDATE_LINEUP_LIST_S        = 1412; //更新阵容列表返回
+  UPDATE_LINEUP_NAME_C        = 1421; //更新阵容名称请求
+  UPDATE_LINEUP_NAME_S        = 1422; //更新阵容名称返回
+
+  TASK_LIST_C                 = 1501; //任务列表请求
+  TASK_LIST_S                 = 1502; //任务列表返回
+  TASK_FINISH_C               = 1511; //领取任务奖励请求
+  TASK_FINISH_S               = 1512; //领取任务奖励返回
+  TASK_TEST_C                 = 1521; //任务进度测试接口
+  TASK_TEST_S                 = 1522; //任务进度测试接口
+  UPDATE_TASK_S               = 1532; //任务完成通知 下发
+
+  CARD_SCORE_C                = 1601; //特权卡积分获取
+  CARD_SCORE_S                = 1602; //特权卡积分返回
+  CARD_GET_REWARD_C           = 1611; //特权卡奖励获取请求
+  CARD_GET_REWARD_S           = 1612; //特权卡奖励获取返回
+  CARD_TEST_C                 = 1621; //特权卡进度测试接口
+  CARD_TEST_S                 = 1622; //特权卡进度测试接口
+
+  MAIL_LIST_C                 = 1701; //邮件列表请求
+  MAIL_LIST_S                 = 1702; //邮件列表返回
+  MAIL_READ_C                 = 1711; //邮件已读请求
+  MAIL_READ_S                 = 1712; //邮件已读返回
+  MAIL_RECEIVE_C              = 1721; //邮件领取请求
+  MAIL_RECEIVE_S              = 1722; //邮件领取返回
+  MAIL_S                      = 1732; //邮件下发
+
+  COOPERATION_CHEST_OPEN_C    = 1801; //合作宝箱打开请求
+  COOPERATION_CHEST_OPEN_S    = 1802; //合作宝箱打开返回
+  COOPERATION_CHEST_TEST_C    = 1811; //合作宝箱钥匙数量测试
+  COOPERATION_CHEST_TEST_S    = 1812; //合作宝箱钥匙数量测试
+
+  BATTLE_MATCH_C               = 1901; //匹配请求
+  BATTLE_MATCH_S               = 1902; //匹配返回
+  BATTLE_SETTLE_C              = 1911; //战斗结算请求
+  BATTLE_SETTLE_S              = 1912; //战斗结算返回
+  BATTLE_MATCH_CANCEL_C        = 1921; //取消匹配请求
+  BATTLE_MATCH_CANCEL_S        = 1922; //取消匹配返回
+
+  RANK_NORMAL_LIST_C          = 2001; //普通对战排行请求
+  RANK_NORMAL_LIST_S          = 2002; //普通对战排行返回
+  RANK_COOPERATION_LIST_C     = 2011; //合作模式排行请求
+  RANK_COOPERATION_LIST_S     = 2012; //合作模式排行返回
+
+  BATTLE_CHALLENGE_MATCH_C              = 2101; //挑战模式匹配请求
+  BATTLE_CHALLENGE_MATCH_S              = 2102; //挑战模式匹配返回
+  BATTLE_CHALLENGE_MATCH_SETTLE_C       = 2111; //挑战模式结算请求
+  BATTLE_CHALLENGE_MATCH_SETTLE_S       = 2112; //挑战模式结算返回
+  BATTLE_CHALLENGE_STATUS_C             = 2121; //挑战模式状态请求
+  BATTLE_CHALLENGE_STATUS_S             = 2122; //挑战模式状态返回
+  BATTLE_CHALLENGE_RAND_REWARD_C        = 2131; //随机竞技场奖励领取请求
+  BATTLE_CHALLENGE_RAND_REWARD_S        = 2132; //随机竞技场奖励领取返回
+  BATTLE_CHALLENGE_UNLOCK_REWARD_C      = 2141; //挑战模式解锁奖励请求
+  BATTLE_CHALLENGE_UNLOCK_REWARD_S      = 2142; //挑战模式解锁奖励返回
+  BATTLE_CHALLENGE_RAND_HERO_SELECT_C   = 2151; //随机竞技场英雄选择请求
+  BATTLE_CHALLENGE_RAND_HERO_SELECT_S   = 2152; //随机竞技场英雄选择返回
+  BATTLE_CHALLENGE_RAND_HERO_REFRESH_C  = 2161; //随机竞技场英雄选择刷新请求
+  BATTLE_CHALLENGE_RAND_HERO_REFRESH_S  = 2162; //随机竞技场英雄选择刷新返回
+  BATTLE_CHALLENGE_RAND_HERO_C          = 2171; //随机竞技场英雄选择状态查询请求
+  BATTLE_CHALLENGE_RAND_HERO_S          = 2172; //随机竞技场英雄选择状态查询返回
+  BATTLE_CHALLENGE_ADMISSION_C          = 2181; //挑战模式入场请求
+  BATTLE_CHALLENGE_ADMISSION_S          = 2182; //挑战模式入场返回
+
+  CHAT_C        = 2201; //聊天消息请求
+  CHAT_S        = 2202; //聊天消息返回
+  CHAT_RECORD_C = 2211; //聊天记录请求
+  CHAT_RECORD_S = 2212; //聊天记录返回
+
+  BATTLE_FRAME_SYNC_C         = 2301; //帧同步请求
+  BATTLE_FRAME_SYNC_S         = 2302; //帧同步请求返回
+  BATTLE_FRAME_SYNC_UPDATE_S  = 2312; //帧同步推送
+  BATTLE_FRAME_SYNC_READY_C   = 2321; //帧同步准备完成请求
+  BATTLE_FRAME_SYNC_READY_S   = 2322; //帧同步准备完成推送
+  BATTLE_FRAME_SYNC_DATA_SYNC_C   = 2331; //帧同步数据同步请求
+  BATTLE_FRAME_SYNC_DATA_SYNC_S   = 2332; //帧同步数据同步返回
+
+  FRIEND_LIST_C         = 2401; //好友列表请求
+  FRIEND_LIST_S         = 2402; //好友列表返回
+  FRIEND_FIND_C         = 2411; //好友查找请求
+  FRIEND_FIND_S         = 2412; //好友查找返回
+  FRIEND_ADD_C          = 2421; //好友添加请求
+  FRIEND_BLACK_LIST_C   = 2431; //好友添加黑名单请求
+  FRIEND_AGREE_C        = 2441; //好友同意请求
+  FRIEND_REFUSE_C       = 2451; //好友拒绝请求
+  FRIEND_DELETE_C       = 2461; //好友删除请求
+  FRIEND_ALL_AGREE_C    = 2471; //同意所有好友请求
+  FRIEND_ALL_REFUSE_C   = 2481; //同意所有好友请求
+  FRIEND_LIST_UPDATE_S  = 2492; //好友列表更新返回
+
+  FRIEND_BATTLE_C         = 2501;  //好友对战邀请请求
+  FRIEND_BATTLE_S         = 2502;  //好友对战邀请返回
+  FRIEND_BATTLE_AGREE_C   = 2511;  //好友对战同意请求
+  FRIEND_BATTLE_AGREE_S   = 2512;  //好友对战同意返回
+  FRIEND_BATTLE_CANCEL_C  = 2521;  //好友对战取消请求
+  FRIEND_BATTLE_CANCEL_S  = 2522;  //好友对战取消返回
+
+  NOTICE_C            = 2601; //公告获取请求
+  NOTICE_S            = 2602; //公告返回
+
+  UPDATE_MONEY_S              = 6002; //更新货币返回
+}
+
+//消息请求结构
+message MESSAGE_REQ{
+  MsgId msgId = 1;
+  bytes data = 2;
+  string token = 3;
+}
+
+//消息返回结构
+message MESSAGE_RSP {
+  MsgId msgId = 1;
+  int32 code = 2;
+  string message = 3;
+  string uid = 4;
+  bytes data = 5;
+}
+
+//GM请求结构
+message GM_REQ{
+  string gmMsg = 2;
+}
+
+//登录请求结构
+message LOGIN_REQ {
+  string account = 1;   //账号
+  string password = 2;  //密码
+}
+
+//登录返回结构
+message LOGIN_RSP {
+  int32 loginResult = 1; //[状态码]
+  int64 curTime = 2;     //[当前时间]
+  string token = 3;      //[验证token]
+}
+
+//实名认证请求结构
+message IDCARD_REQ{
+  string name = 1;   //真实姓名
+  string idCard = 2; //身份证
+}
+
+//实名认证返回结构
+message IDCARD_RSP{
+  int32 result = 1;       //[状态码]
+  int32 nameVerified = 2; //是否实名认证 1.未提交,2已提交,3已认证
+}
+
+//重连请求结构
+message RE_CONNECT_REQ{
+  int32 accountId = 1;  //账号id
+  string token = 2;     //重连验证token
+}
+
+//重连返回结构
+message RE_CONNECT_RSP{
+  int32 reconnectResult = 1;  //[状态码  LoginResult]
+  int64 curTime = 2;          //[当前时间]
+  string token = 3;           //[验证token]
+}
+
+//玩家数据请求结构
+message PLAYER_DATA_REQ{
+}
+
+//玩家数据返回结构
+message PLAYER_DATA_RSP{
+  string uid = 1;                        //[玩家id]
+  string name = 2;                       //[玩家名字]
+  int64 gold = 3;                        //[金币]
+  int64 diamond = 4;                     //[钻石或者元宝]
+  int32 level = 5;                       //[等级]
+  string title = 6;                      //[称号]
+  int32 exp = 7;                         //[经验值]
+  int32 image = 8;                       //[头像]
+  int32 imageFrame = 9;                  //[头像框]
+  int32 pvpNum = 10;                     //[对战次数]
+  int32 pvpWinOdds = 11;                 //[对战胜率]
+  int32 maxRound = 12;                   //[合作模式最大回合数]
+  int32 maxTrophy = 13;                  //[最高段位积分]
+  int32 mirrorTypeTicket = 14;           //[镜像模式门票]
+  int32 randomPvpTicket = 15;            //[随机竞技场门票]
+  int32 firstCharge = 16;                 //是否已首充 0:否 1:是
+  int32 seasonCard = 17;                  //是否购买至尊卡 0:否 1:是
+  int32 monthCard = 18;                   //是否购买月卡 0:否 1:是
+  int32 seasonScore = 19;                 //赛季积分
+  int32 monthScore = 20;                  //月卡积分
+  int32 cooperationKey = 21;              //合作宝箱钥匙
+  int32 cooperationRemainCount = 22;      //合作模式剩余次数
+  int32 regionId = 23;                    //区服id
+  int32 regionName = 24;                  //区服名称
+}
+
+//更新玩家名称请求结构
+message UPDATE_PLAYER_NAME_REQ{
+  string name = 1;
+}
+
+//更新玩家名称返回结构
+message UPDATE_PLAYER_NAME_RSP{
+  string name = 2;
+}
+
+//更新玩家称号请求结构
+message UPDATE_PLAYER_TITLE_REQ{
+  string title = 1;
+}
+
+//更新玩家称号返回结构
+message UPDATE_PLAYER_TITLE_RSP{
+  string title = 2;
+}
+
+//更新玩家头像请求结构
+message UPDATE_PLAYER_IMAGE_REQ{
+  int32 image = 1;
+}
+
+//更新玩家头像返回结构
+message UPDATE_PLAYER_IMAGE_RSP{
+  int32 image = 2;
+}
+
+//更新玩家头像框请求结构
+message UPDATE_PLAYER_IMAGE_FRAME_REQ{
+  int32 imageFrame = 1;
+}
+
+//更新玩家头像框返回结构
+message UPDATE_PLAYER_IMAGE_FRAME_RSP{
+  int32 imageFrame = 2;
+}
+
+//英雄信息
+message HERO_DATA{
+  int32 heroId = 1;    //[英雄id]
+  int32 heroLevel = 2; //[英雄等级]
+  int32 heroNum = 3;   //[英雄数量]
+  int32 skinId = 4;    //[皮肤id]
+  int32 status = 5;    //[英雄状态 0:空闲 1:上阵]
+}
+
+//英雄列表
+message HERO_LIST{
+  repeated int32 list = 1;
+}
+
+//英雄列表请求
+message HERO_LIST_REQ{
+}
+
+//英雄列表返回
+message HERO_LIST_RSP{
+  repeated HERO_DATA data = 1;
+}
+
+//英雄升级请求结构
+message UPDATE_HERO_LEVEL_REQ{
+  int32 heroId = 1; //[英雄id]
+}
+
+//英雄升级返回结构
+message UPDATE_HERO_LEVEL_RSP{
+  int64 gold = 1;     //金币
+  HERO_DATA data = 2; //英雄数据
+}
+
+//更新英雄皮肤请求结构
+message UPDATE_HERO_SKINID_REQ{
+  int32 heroId = 1; //[英雄id]
+  int32 skinId = 2; //[皮肤id]
+}
+
+//更新英雄皮肤返回结构
+message UPDATE_HERO_SKINID_RSP{
+  HERO_DATA data = 1; //英雄数据
+}
+
+//英雄信息请求结构
+message HERO_INFO_REQ{
+  int32 heroId = 1; //[英雄id]
+}
+
+//英雄信息返回结构
+message HERO_INFO_RSP{
+  HERO_DATA data = 1; //英雄数据
+}
+
+//阵容数据
+message LINEUP_DATA{
+  int32 index = 1;              //阵容索引
+  string name = 2;              //阵容名
+  repeated int32 formation = 3; //阵容列表
+}
+
+//阵容列表请求结构
+message LINEUP_LIST_REQ{
+}
+
+//阵容列表返回结构
+message LINEUP_LIST_RSP{
+  repeated LINEUP_DATA data = 1;  //阵容数据列表
+}
+
+//修改阵容请求结构
+message UPDATE_LINEUP_REQ{
+  int32  index = 1;              //阵容索引
+  repeated int32 formation = 2;  //阵容列表
+}
+
+//修改阵容返回结构
+message UPDATE_LINEUP_RSP{
+  LINEUP_DATA data = 2;  //阵容数据
+}
+
+//修改阵容名称请求结构
+message UPDATE_LINEUP_NAME_REQ{
+  int32  index = 1; //阵容索引
+  string name = 2;  //阵容名称
+}
+
+//修改阵容名称返回结构
+message UPDATE_LINEUP_NAME_RSP{
+  int32 index = 2;  //阵容索引
+  string name = 3;  //阵容名称
+}
+
+
+message SHOP_DATA{
+  int32 id = 1;          //商品ID
+  int32 shopType = 2;    //商品类型
+  int32 moneyType = 3;   //货币类型
+  int32 oldPrice = 4;    //原价
+  int32 newPrice = 5;    //现价
+  int32 superValue = 6;  //超值
+  int32 dropId = 7;      //掉落id
+  int32 refreshTime = 8; //重置时间
+  int32 stack = 9;       //叠组
+  string icon = 10;      //图标
+  string name = 11;      //名字
+  string dec = 12;       //描述
+  int64 gold = 13;        //金币
+  int64 diamond = 14;     //钻石
+  repeated SHOP_HERO heroList = 15;  //英雄id列表
+  SHOP_BOX shopBox = 16;  //宝箱商店返回宝箱内容
+  string prop = 17; //道具？待定
+  int32 bought = 18; //是否能购买  0 可以购买  1 不可以购买
+  int32 firstExtra = 19; //货币商店是否有首次购买奖励或是否有折扣 0 默认 没有 1 有
+  int64 resetTime = 20; //商品下次实际刷新时间戳
+}
+
+message SHOP_BOX {
+  repeated int64 gold = 1;        //金币
+  repeated int64 diamond = 2;     //钻石
+  repeated BOX_ROLE boxRole = 3; //角色列表
+}
+
+message BOX_ROLE {
+  int32 roleType = 1;  //角色类型
+  int32 roleNum = 2; //角色数量
+}
+
+message SHOP_HERO{
+  int32 heroId = 1;   //英雄ID
+  int64 heroNum = 2;  //英雄数量
+}
+
+//商品列表请求结构
+message SHOP_LIST_REQ{
+  int32 shopIndex = 1; //商城类型索引
+  int32 pageNum = 2;   //页数
+  int32 pageSize = 3;  //当前页数物品数量大小
+}
+
+//商品列表返回结构
+message SHOP_LIST_RSP{
+  int32 shopType = 1;                   //商店类型
+  int64 resetTime = 2;                  //刷新时间
+  int32 resetFrequency = 3;             //刷新次数
+  int32 remainFrequency = 4;            //剩余次数
+  repeated SHOP_DATA shopList = 5;      //商品数据列表
+  repeated SHOP_CARD cardList = 6;      //特权商店列表
+}
+
+//商店刷新请求结构
+message SHOP_RESET_REQ{
+  int32 shopType = 1;
+}
+
+//商品购买请求结构
+message SHOP_BUY_REQ{
+  int32 shopId = 1; //商品id
+  int32 shopType = 2; //商品类型
+}
+
+//商品购买返回结构
+message SHOP_BUY_RSP{
+  int32 result = 1;  //购买结果 [1成功，2货币不足]
+  int32 shopType = 2;//商店类型
+  int32 shopId = 3;
+  int64 gold = 4;    //金币
+  int64 diamond = 5; //钻石或者元宝
+  repeated SHOP_HERO heroList = 6; //英雄id和数量
+  int64 resetTime = 7;  //商品实际刷新时间戳
+  string prop = 8; //道具？待定
+}
+
+//商城卡结构
+message SHOP_CARD{
+  int32 id = 1;
+  int32 type = 2;   //卡类型
+  int32 price = 3;  //价格
+  string icon = 4;
+  string name = 5;
+  string desc = 6;  //描述
+  int32 active = 7; //是否已激活 0：未激活 1：激活
+}
+
+//货币返回结构
+message UPDATE_MONEY_RSP{
+  int64 gold = 1;    //金币
+  int64 diamond = 2; //钻石或者元宝
+}
+
+//道具
+message PROP_DATA{
+  int32 id = 1;
+  string name = 2;
+  int32 dropId = 3;
+  int32 quality = 4;
+  string channel = 5;
+  string desc = 6;
+}
+
+message TASK_LIST_REQ{
+}
+message TASK_LIST_RES{
+  repeated TASK_DATA taskList = 1;
+}
+
+//任务数据
+message TASK_DATA{
+  int32 id = 1;
+  int32 type = 2;  //任务类型 0：每日任务 1：活跃任务 2：成长任务 3：活动任务
+  int32 stack = 3;  //任务模式类型  对应不同描述的任务
+  int32 startTime = 4;
+  int32 endTime = 5;
+  string desc = 6;
+  int32 openCondition = 7;
+  int32 before_task = 8;
+  int32 status = 9; //任务状态  0：未开启 1：已完成 2：未完成 3：已领取奖励
+  int32 count = 10; //总次数
+  int32 currentCount = 11; //当前次数
+  int32 quality = 12;
+  string icon = 13;
+  TASK_BOX box = 14;
+}
+
+message TASK_BOX {
+  repeated int64 gold = 1;        //金币
+  repeated int64 diamond = 2;     //钻石
+  repeated BOX_ROLE boxRole = 3; //角色列表
+}
+
+message FINISH_TASK_REQ {
+  int32 taskId = 1;
+  int32 taskType = 2;
+  int32 stack = 3;
+}
+
+message FINISH_TASK_RES {
+  int32 taskType = 1;//任务类型
+  int32 taskId = 2;
+  int32 stack = 3;
+  int64 gold = 4;    //金币
+  int64 diamond = 5; //钻石或者元宝
+  repeated SHOP_HERO heroList = 6; //英雄id和数量
+  TASK_DATA nextTask = 7; //下个任务
+}
+
+message UPDATE_TASK_STATUS {
+  TASK_DATA task = 1;
+}
+
+//任务进度测试接口
+message TASK_TEST_REQ {
+  int32 stack = 1;
+  int32 count = 2;
+}
+
+//任务进度测试接口
+message TASK_TEST_RES {
+  int32 result = 1;
+}
+
+message CARD_SCORE_REQ {
+  int32 type = 1;
+}
+
+message CARD_SCORE_RES {
+  int32 type = 1;  // 1月卡 2至尊卡
+  int64 endTime = 2;
+  repeated CARD_DATA cardList = 3;
+}
+
+message CARD_GET_REWARD_REQ {
+  int32 cardType = 1;
+  int32 rewardId = 2;
+  int32 rewardType = 3; //奖励类型 0:普通奖励  1:开通奖励
+  int32 receiveAll = 4; // 是否一键领取 0:否 1:是
+}
+
+message CARD_GET_REWARD_RES {
+  int32 cardType = 1;//特权卡类型
+  int32 rewardId = 2;
+  int32 rewardType = 3;
+  int32 receiveAll = 4;
+  int64 gold = 5;    //金币
+  int64 diamond = 6; //钻石或者元宝
+  repeated SHOP_HERO heroList = 7; //英雄id和数量
+}
+
+message CARD_TEST_REQ {
+  int32 cardType = 1;
+  int32 count = 2;
+  int32 countType = 3;  //0:加 1:减
+}
+
+message CARD_TEST_RES {
+  int32 result = 1;
+}
+
+message CARD_DATA {
+  int32 id = 1;
+  int32 normalStatus = 2;
+  int32 openStatus = 3;
+}
+
+
+message MAIL_LIST_REQ {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message MAIL_LIST_RES {
+  int32 page = 1;
+  int32 limit = 2;
+  repeated MAIL_DATA mailList = 3;
+}
+
+message MAIL_READ_REQ {
+  int32 mailId = 1;
+}
+message MAIL_READ_RES {
+  int32 result = 1;
+}
+
+message MAIL_RECEIVE_REQ {
+  int32 mailId = 1;
+}
+message MAIL_RECEIVE_RES {
+  int32 mailId = 1;
+  DROP_DATA reward = 2;
+}
+
+message MAIL_UPDATE {
+  MAIL_DATA data = 1;
+}
+
+message MAIL_DATA {
+  int32 id = 1;
+  int32 status = 2;
+  int32 read = 3;
+  int32 mailType = 4;
+  string title = 5;
+  string content = 6;
+  MAIL_REWARD reward = 7;
+}
+
+message MAIL_REWARD {
+  int64 gold = 1;
+  int64 diamond = 2;
+  repeated MAIL_PROP list = 3;
+}
+
+message MAIL_PROP {
+  Prop_Type type = 1;
+  int32 id = 2;
+  int32 num = 3;
+}
+
+enum Prop_Type{
+  Box = 0;
+  Hero = 1;
+  Role = 2;
+}
+
+message DROP_DATA {
+  int64 gold = 1;    //金币
+  int64 diamond = 2; //钻石或者元宝
+  repeated SHOP_HERO heroList = 3; //英雄id和数量
+}
+
+message COOPERATION_CHEST_REQ {
+  int32 count = 1;
+}
+
+message COOPERATION_CHEST_RES {
+  DROP_DATA reward = 1;
+  int32 keyRemainCount = 2;  //剩余合作宝箱钥匙数
+}
+
+message COOPERATION_KEY_TEST_REQ {
+  int32 count = 1;
+}
+message COOPERATION_KEY_TEST_RES {
+  int32 result = 1;
+}
+
+message BATTLE_MATCH_REQ {
+  BattleType battleType = 1;
+  repeated BATTLE_LINEUP lineup = 2;
+}
+
+message BATTLE_MATCH_RES {
+  BattleType battleType = 1;
+  MATCH_PLAYER matchPlayer = 2;
+  string roomId = 3;  //房间号
+}
+
+message BATTLE_MATCH_CANCEL_REQ {
+  BattleType battleType = 1;
+}
+
+message BATTLE_MATCH_CANCEL_RES {
+  int32 result = 1;
+}
+
+
+
+message BATTLE_SETTLE_REQ {
+  int32 type = 1;  //0匹配对战 1合作模式
+  int32 roundNum = 2;
+  int32 key= 3;
+  int32 result = 4; //战斗结果 0失败 1胜利
+  int32 HeroMixMaxLevel = 5;   //该局战斗合成的最高星级英雄
+  string roomId = 6; //房间号
+  int32 time = 7; //战斗结束所用时间
+}
+
+message BATTLE_SETTLE_RES {
+  int32 type = 1;  //0匹配对战 1合作模式
+  int32 exp = 2;  //获得经验
+  int32 gold = 3; //获得金币
+  int32 diamond = 4; //获得钻石
+  int32 score = 5; //获得积分
+  BATTLE_PLAYER_DATA self = 6; //玩家自己的数据
+  BATTLE_PLAYER_DATA other = 7; //对方玩家数据
+}
+
+message BATTLE_PLAYER_DATA {
+  string uid = 1;
+  int32 pvpWinOdds = 2;
+  int32 result = 3;
+  int32 seasonScore = 4;
+}
+
+message BATTLE_LINEUP {
+  int32  heroId = 1;
+  int32  outsideHeroLevel = 2;
+}
+
+//挑战模式匹配请求
+message BATTLE_CHALLENGE_MATCH_REQ {
+  BattleType battleType = 1;
+  repeated BATTLE_LINEUP lineup = 2;
+}
+//挑战模式匹配返回
+message BATTLE_CHALLENGE_MATCH_RES {
+  BattleType battleType = 1;
+  MATCH_PLAYER matchPlayer = 2;
+  string roomId = 5;
+}
+
+message MATCH_PLAYER {
+  string uid = 1;
+  string name = 2;                       //[玩家名字]
+  int32 level = 3;                       //[等级]
+  int32 image = 4;                       //[头像]
+  int32 imageFrame = 5;                  //[头像框]
+  int32 seasonScore = 6;
+  int32 regionId = 7;
+  repeated BATTLE_LINEUP lineup = 8;
+}
+//挑战模式结算请求
+message BATTLE_CHALLENGE_SETTLE_REQ {
+  BattleType battleType = 1;
+  int32 result = 2;
+  int32 HeroMixMaxLevel = 3;   //该局战斗合成的最高星级英雄
+  string roomId = 4; //房间号
+
+}
+enum BattleType {          //对战类型
+  Normal = 0;            //普通模式
+  Cooperation = 1;       //合作模式
+  Mirror = 2;            //镜像模式
+  Random = 3;            //随机竞技场
+  Transmigration = 4;    //轮回杀场
+  NormalFried = 5;       //普通模式 与好友一起玩
+  CooperationFried = 6;  //合作模式 与好友一起玩
+}
+//挑战模式结算返回
+message BATTLE_CHALLENGE_SETTLE_RES {
+  BattleType battleType = 1;
+  int32 result = 2;
+  DROP_DATA reward = 3;
+  BATTLE_PLAYER_DATA self = 4; //玩家自己的数据
+  BATTLE_PLAYER_DATA other = 5; //对方玩家数据
+  int32 challengeEnd = 6; //本轮挑战是否结束 0：未结束 1：结束 用于随机竞技场结算
+}
+
+message CHALLENGE_STATUS_REQ {
+
+}
+
+message CHALLENGE_STATUS_RES {
+  repeated CHALLENGE_STATUS statusList = 1;
+}
+
+message CHALLENGE_STATUS {
+  BattleType battleType = 1;
+  int32 costStatus = 2;           //入场费状态 0：首次消耗金币 1：非首次消耗钻石
+  int32 admissionStatus = 3;      //入场状态  0:未入场 1：已入场
+  int32 unlockStatus = 4;         //解锁奖励领取状态  0:未领取 1：已领取
+  RAND_DETAIL randDetail = 5;     // 随机竞技场详细状态  battleType 是随机竞技场的情况下获取
+}
+
+message RAND_DETAIL {
+  int32 randHeroSelectStatus = 1;           //随机竞技场英雄选择状态  0:未完成 1:已完成
+  repeated BATTLE_LINEUP randLineup = 2;    //随机竞技场当前阵容   已完成英雄选择的情况下获取
+  int32 randWinCount = 3;                   //随机竞技场胜利场数   已完成英雄选择的情况下获取
+  int32 randFailCount = 4;                  //随机竞技场失败场数   已完成英雄选择的情况下获取
+}
+
+
+message CHALLENGE_RAND_REWARD_REQ {
+
+}
+
+message CHALLENGE_RAND_REWARD_RES {
+  DROP_DATA reward = 1;
+}
+
+message CHALLENGE_UNLOCK_REWARD_REQ {
+  BattleType battleType = 1;
+}
+
+message CHALLENGE_UNLOCK_REWARD_RES {
+  BattleType battleType = 1;
+  DROP_DATA reward = 2;
+}
+
+//挑战模式入场请求
+message CHALLENGE_ADMISSION_REQ {
+  BattleType battleType = 1;
+}
+
+//挑战模式入场返回
+message CHALLENGE_ADMISSION_RES {
+  BattleType battleType = 1;
+  int32 result = 2;
+  //  map<int32, RAND_SELECT_HERO> randHeroMap = 3;
+}
+
+message CHALLENGE_RAND_HERO_REQ {
+}
+
+message CHALLENGE_RAND_HERO_SELECT_REQ {
+  int32 round = 1;
+  int32 heroId = 2;
+}
+
+message CHALLENGE_RAND_HERO_REFRESH_REQ {
+  int32 round = 1;
+}
+
+message CHALLENGE_RAND_HERO_RES {
+  int32 round = 1;
+  repeated int32 selectedHero = 2;
+  repeated int32 randHero = 3;
+  int32 remainCount = 4;
+  int32 selectEnd = 5;                      //阵容选择是否完成  0:未完成 1:完成
+}
+
+//普通对战排行请求
+message RANK_NORMAL_LIST_REQ {
+  RANKING_TYPE type = 1; //排行榜类型
+}
+//普通对战排行返回
+message RANK_NORMAL_LIST_RES {
+  RANKING_TYPE type = 1;
+  int32 selfRankNum = 2;    // 个人排名  0为未上榜
+  repeated MATCH_PLAYER playerList = 3;
+}
+
+//合作模式排行请求
+message RANK_COOPERATION_LIST_REQ {
+  RANKING_TYPE type = 1;
+}
+//合作模式排行返回
+message RANK_COOPERATION_LIST_RES {
+  RANKING_TYPE type = 1;
+  int32 selfRankNum = 2;
+  repeated RANK_COOPERATION_PLAYER_DATA playerList = 3;
+}
+message RANK_COOPERATION_PLAYER_DATA {
+  int32 maxRound = 1;
+  repeated MATCH_PLAYER players = 2;
+}
+
+enum RANKING_TYPE {//排行榜类型
+  Level = 0; //同段位
+  Region = 1;//同服
+  AllRegion = 2;//全服
+}
+
+//聊天请求
+message CHAT_REQ{
+  int32  type = 1;      //1世界聊天 2帮派聊天 3私聊 4对战邀请
+  string fid = 2;       //私聊类型就是好友uid,帮派类型就是帮派ID
+  string message = 3;   //消息体
+}
+
+//聊天返回
+message CHAT_RSP{
+  int32  type = 1;      //1世界聊天 2帮派聊天 3私聊 4对战邀请
+  string message = 2;
+}
+
+//聊天记录请求
+message CHAT_RECORD_REQ{
+  string fid = 2;       //私聊类型就是好友uid,帮派类型就是帮派ID
+}
+
+//聊天记录返回
+message CHAT_RECORD_RSP{
+  repeated string chat_record = 1;
+}
+
+//好友列表数据
+message FRIEND_LIST_DATA{
+  string name   = 1;      //玩家名称
+  int32  level  = 2;      //玩家等级
+  int32  rank   = 3;      //玩家段位排名
+  string friendId = 4;    //好友ID
+}
+
+//好友列表请求
+message FRIEND_LIST_REQ{
+  int32 type = 1;      //1我的好友 2申请列表 3添加好友 4黑名单
+}
+
+//好友列表返回
+message FRIEND_LIST_RSP{
+  int32   type = 1;           //1我的好友 2申请列表 3添加好友 4黑名单
+  int32   friendNum = 2;      //好友数量
+  int32   blackListNum  = 3;  //黑名单数量
+  repeated FRIEND_LIST_DATA friendData = 4;
+}
+
+//好友查找请求
+message FRIEND_FIND_REQ{
+  string id   = 1;    //玩家id查找
+  string name = 2;    //玩家名字查找(确认无特殊符号)
+}
+
+//好友查找返回
+message FRIEND_FIND_RSP{
+  FRIEND_LIST_DATA friendData = 1;
+}
+
+//好友添加请求
+message FRIEND_ADD_REQ{
+  string id = 1;      //玩家uid
+}
+
+//好友黑名单请求
+message FRIEND_BLACK_LIST_REQ{
+  string id = 1;      //玩家uid
+}
+
+//同意好友请求
+message FRIEND_AGREE_REQ{
+  string id = 1;      //玩家uid
+}
+
+//同意所有好友请求
+message FRIEND_ALL_AGREE_REQ{
+}
+
+//拒绝好友请求
+message FRIEND_REFUSE_REQ{
+  string id = 1;      //玩家uid
+}
+
+//拒绝所有好友请求
+message FRIEND_ALL_REFUSE_REQ{
+}
+
+//删除好友请求
+message FRIEND_DELETE_REQ{
+  int32 type  = 1;    //1删除 2移除黑名单
+  string id   = 2;    //玩家uid
+}
+
+//好友列表更新返回
+message FRIEND_LIST_UPDATE_RSP{
+  int32 type  = 1;    //1刷新好友 2刷新申请列表 3刷新添加好友 4刷新黑名单
+}
+
+//好友邀请对战请求
+message FRIEND_BATTLE_REQ{
+  int32  type = 1;                    //1.对战模式 2.合作模式
+  string id   = 2;                    //玩家uid
+  repeated BATTLE_LINEUP lineup = 3;  //发送者的阵容
+}
+
+//好友邀请对战返回
+message FRIEND_BATTLE_RSP{
+  int32 type = 1;   //1.对战模式 2.合作模式
+  FRIEND_LIST_DATA data = 2;
+}
+
+//好友对战同意请求
+message FRIEND_BATTLE_AGREE_REQ{
+  int32  type = 1;                    //1.对战模式 2.合作模式
+  string id   = 2;                    //玩家uid
+  repeated BATTLE_LINEUP lineup = 3;  //接受者的阵容
+}
+
+//好友对战同意返回
+message FRIEND_BATTLE_AGREE_RSP{
+  //
+}
+
+//好友对战取消请求
+message FRIEND_BATTLE_CANCEL_REQ{
+  string id = 1;  //对战的玩家uid
+}
+
+//好友对战取消返回
+message FRIEND_BATTLE_CANCEL_RSP{
+  //前端接到消息后关闭对战邀请界面
+}
+
+//帧同步请求
+message FRAME_SYNC_REQ {
+  string roomId = 1;
+  string uid = 2;
+  string matchUid = 3;
+  repeated FRAME_SYNC_DATA data = 4;
+}
+
+message FRAME_SYNC_RES {
+  int32 result = 1;
+  repeated FRAME_SYNC_DATA data = 2;
+}
+
+message FRAME_SYNC_UPDATE {
+  repeated FRAME_SYNC_DATA data = 1;
+}
+
+message FRAME_SYNC_READY_REQ {
+  string roomId = 1;
+}
+
+message FRAME_SYNC_READY_UPDATE {
+  int32 result = 1;
+  string roomId = 2;
+  int64 randomSeed = 3;   //开始时间戳  可作为固定随机种子 做Boss随机
+}
+
+//帧同步推送
+message FRAME_SYNC_DATA {
+  
+  string roomId = 1;
+  int32 frameId = 2;
+  int64 time = 3;
+  string uid = 4;
+  FRAME_SYNC_GAME_DATA gameData = 5;
+}
+
+message FRAME_SYNC_GAME_DATA {
+  repeated INSIDE_LINEUP heroLineupList = 1;
+  repeated HERO_COMPOSE heroComposeList = 2;
+}
+
+message FRAME_SYNC_DATA_SYNC_REQ {
+  string roomId = 1;
+  int32 startFrameId = 2;
+}
+
+message FRAME_SYNC_DATA_SYNC_RES {
+  string roomId = 1;
+  int32 startFrameId = 2;
+  repeated FRAME_SYNC_DATA data = 3;
+}
+
+
+message INSIDE_LINEUP {
+  int32  heroId = 1;
+  int32  insideHeroLevel = 2;
+}
+
+message HERO_COMPOSE {
+  int32 posIndex = 1;
+  int32 heroId = 2;
+  int32 syntheticHeroLevel = 3;
+}
+
+message NOTICE_REQ {
+
+}
+
+message NOTICE_RES {
+  string content = 1;
+}

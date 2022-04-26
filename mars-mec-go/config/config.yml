@@ -1,0 +1,9 @@
+mysql:
+  address: "rm-wz95q6cgs5fiyajngto.mysql.rds.aliyuncs.com"
+  port: "3306"
+  name: "zhuzibaijia"
+  password: "SHANYING1254456da"
+  database: "zzbj"
+#  database: "client"
+
+

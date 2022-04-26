@@ -1,0 +1,28 @@
+{
+  "MasterDiscoveryNode": [
+    {
+      "NodeId": 1,
+      "ListenAddr": "127.0.0.1:8000"
+    }
+  ],
+  "NodeList": [
+    {
+      "NodeId": 1,
+      "ListenAddr": "127.0.0.1:10001",
+      "NodeName": "node1",
+      "Private": true,
+      "remark": "",
+      "ServiceList": [
+        "HttpService",
+        "AdminService",
+        "GatewayService",
+        "LoginService",
+        "UserService",
+        "AccountService",
+        "CardService",
+        "MyAdmin",
+        "MyGateway"
+      ]
+    }
+  ]
+}

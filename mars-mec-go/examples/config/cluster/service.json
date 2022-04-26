@@ -1,0 +1,45 @@
+{
+  "Service": {
+    "HttpService": {
+      "ListenAddr":"0.0.0.0:1000",
+      "ReadTimeout":10000,
+      "WriteTimeout":10000,
+      "ProcessTimeout":10000,
+      "CAFile":[
+        {
+          "Certfile":"",
+          "Keyfile":""
+        }
+      ]
+    }
+  },
+  "NodeService": [
+    {
+      "NodeId": 1,
+      "MyAdmin": {
+        "ListenAddr":"0.0.0.0:3000",
+        "ReadTimeout":10000,
+        "WriteTimeout":10000,
+        "ProcessTimeout":10000,
+        "CAFile":[
+          {
+            "Certfile":"",
+            "Keyfile":""
+          }
+        ]
+      },
+      "MyGateway": {
+        "ListenAddr":"0.0.0.0:8000",
+        "ReadTimeout":10000,
+        "WriteTimeout":10000,
+        "ProcessTimeout":10000,
+        "CAFile":[
+          {
+            "Certfile":"",
+            "Keyfile":""
+          }
+        ]
+      }
+    }
+  ]
+}
