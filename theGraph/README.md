@@ -105,3 +105,67 @@ graph auth --product hosted-service <ACCESS_TOKEN>
 graph deploy --product hosted-service <GITHUB_USER>/<SUBGRAPH NAME>
 
 ```
+
+## graph-cli
+https://github.com/graphprotocol/graph-cli
+
+graph项目脚手架相关命令
+
+- `graph init` — Creates a new subgraph project from an example or an existing contract.
+- `graph create` — Registers a subgraph name with a Graph Node.
+- `graph remove` — Unregisters a subgraph name with a Graph Node.
+- `graph codegen` — Generates AssemblyScript types for smart contract ABIs and the subgraph schema.
+- `graph build` — Compiles a subgraph to WebAssembly.
+- `graph deploy` — Deploys a subgraph to a [Graph Node](https://github.com/graphprotocol/graph-node).
+- `graph auth` — Stores a [Graph Node](https://github.com/graphprotocol/graph-node) access token in the system's keychain.
+- `graph local` — Runs tests against a [Graph Node](https://github.com/graphprotocol/graph-node) test environment (using Ganache by default).
+- `graph test` — Downloads and runs the [Matchstick](https://github.com/LimeChain/matchstick) rust binary in order to test a subgraph.
+
+
+## graph-node
+
+Graph Node 是一个开源的 Rust 实现，可以通过 GraphQL 端点查询 来自 Ethereum 区块链 事件 的数据存储。
+
+https://github.com/graphprotocol/graph-node
+
+可以搭建本地节点测试，相对比较麻烦 
+
+### 环境搭建
+
+#### rust 安装
+https://www.rust-lang.org/tools/install
+
+其他安装方法
+https://forge.rust-lang.org/infra/other-installation-methods.html
+
+mac推荐使用`homebrew`安装
+```bash
+  brew install rust
+```
+安装完成验证
+``` bash
+$ rustc --version
+  rustc 1.59.0
+```
+
+#### PostgreSQL 安装
+https://www.postgresql.org/download/
+mac推荐使用`homebrew`
+```bash
+$ brew install postgresql
+```
+
+
+#### IPFS 安装
+https://docs.ipfs.io/install/
+
+测试可以直接下载桌面版本
+
+### 本地运行Graph 节点
+
+https://github.com/graphprotocol/graph-node#running-a-local-graph-node
+
+
+
+
+

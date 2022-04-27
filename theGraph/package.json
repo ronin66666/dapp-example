@@ -5,7 +5,7 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ Ronin/Game",
-    "create-local": "graph create --node http://localhost:8020/ Ronin/Game",
+    "create-local": "graph create --node http://127.0.0.1:8020/ Ronin/Game",
     "remove-local": "graph remove --node http://localhost:8020/ Ronin/Game",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 Ronin/Game"
   },
