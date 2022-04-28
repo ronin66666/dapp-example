@@ -161,11 +161,6 @@ https://docs.ipfs.io/install/
 
 测试可以直接下载桌面版本
 
-### 本地运行Graph 节点
+### 本地运行Graph 节点
 
 https://github.com/graphprotocol/graph-node#running-a-local-graph-node
-
-
-
-
-

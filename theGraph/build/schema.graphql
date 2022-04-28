@@ -1,0 +1,6 @@
+
+type HeroBoxBuyRecord @entity {
+  id: ID!
+  owner: Bytes!
+  amount: BigInt!
+ }

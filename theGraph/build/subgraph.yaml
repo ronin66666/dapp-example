@@ -1,0 +1,24 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: DefinaHeroBoxV2
+    network: bsc
+    source:
+      address: "0x9d0Ad56df30ea438612EDed634D2BfEd021a5D85"
+      abi: DefinaHeroBoxV2
+      startBlock: 17331081
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: DefinaHeroBoxV2\DefinaHeroBoxV2.wasm
+      entities:
+        - HeroBoxBuyRecord
+      abis:
+        - name: DefinaHeroBoxV2
+          file: DefinaHeroBoxV2\abis\DefinaHeroBoxV2.json
+      eventHandlers:
+        - event: MintMulti(indexed address,uint256)
+          handler: handleMintMulti
